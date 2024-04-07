@@ -14,7 +14,7 @@ services:
     image: spring_ssp
     container_name: project-container
     ports:
-      - "9091:9090"
+      - "9090:8080"
     depends_on:
       - mysql
     environment:
