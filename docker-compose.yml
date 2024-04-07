@@ -2,31 +2,29 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:5.6
     container_name: mysql-container
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
-      - /home/ubuntu22_farah/volumes/mySql
+      - /home/ubuntu22_saif/volumes/mySql
 
   springboot:
     image: spring_ssp
     container_name: project-container
     ports:
-      - "9090:9090"
+      - "9091:9090"
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/${MYSQL_DATABASE}?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
-      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-container:3306/${MYSQL_DATABASE}?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
     volumes:
-      - /home/ubuntu22_farah/Ski-Station-Project
+      - /home/ubuntu22_saif/Ski-Station-Project
 
 volumes:
   mysql_data:
